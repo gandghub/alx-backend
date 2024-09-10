@@ -1,5 +1,5 @@
 # English translations for PROJECT.
-# Copyright (C) 2024 G&&G Gemechis G.
+# Copyright (C) 2024 GandG
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <hackthehacker33@gmail.com>, 2024.
 #
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: hackthehacker33@gmail.com\n"
-"POT-Creation-Date: 2024-09-10 13:10+0000\n"
-"PO-Revision-Date: 2024-09-10 13:10+0000\n"
+"POT-Creation-Date: 2024-09-10 14:34+0000\n"
+"PO-Revision-Date: 2024-09-10 14:35+0000\n"
 "Last-Translator: Gemechis Garuma Wakjira <hackthehacker33@gmail.com>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
@@ -37,4 +37,9 @@ msgstr "You are logged in as %(username)s."
 #: templates/5-index.html:14 templates/6-index.html:14
 #: templates/7-index.html:14 templates/index.html:14
 msgid "not_logged_in"
-msgstr "You are not logged in."   
+msgstr "You are not logged in."
+
+#: templates/index.html:16
+msgid "current_time_is"
+msgstr "The current time is %(current_time)s."
+

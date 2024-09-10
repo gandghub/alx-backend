@@ -4,25 +4,26 @@ Flask app with Babel and template localization.
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel
 
 
 class Config:
-    """
-    Config class for Flask app.
-    """
+    """Config class for Flask app."""
+
+    DEBUG = True
     LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """
     Determines the best match for supported languages from request headers.
     """
@@ -30,12 +31,14 @@ def get_locale():
 
 
 @app.route('/')
-def index():
-    """
-    Index route that renders a localized HTML page.
-    """
-    return render_template('3-index.html')
+def index() -> str:
+    '''default route
+
+    Returns:
+        html: homepage
+    '''
+    return render_template("3-index.html")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()

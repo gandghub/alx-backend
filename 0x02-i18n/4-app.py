@@ -1,49 +1,60 @@
 #!/usr/bin/env python3
+"""Module for task 4
 """
-Flask app with URL-based locale switching.
-"""
-
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
+app = Flask(__name__)
+
+app.url_map.strict_slashes = False
+
 
 class Config:
-    """Config class for Flask app."""
-
-    DEBUG = True
+    """Represents a Flask Babel configuration.
+    """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
-app = Flask(__name__)
 app.config.from_object(Config)
-app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
 @babel.localeselector
 def get_locale() -> str:
-    """Get locale from URL parameters or request headers.
+    """Determines the best match for the client's preferred language.
+
+    This function uses Flask's request object to access the client's preferred
+    languages and the app's supported languages (defined in the Config class)
+    to determine the best match. The best match is then returned as the locale.
+
+    Returns:
+        str: The locale code for the best match (e.g. "en", "fr").
     """
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
+    # Get the locale parameter from the incoming request
+    locale = request.args.get('locale', None)
+    # Get list of supported languages from Config
+    supported_languages = app.config["LANGUAGES"]
+    if locale and locale in supported_languages:
+        # If the locale parameter is present and is a supported locale,
+        # return it
         return locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    else:
+        # Use request.accept_languages to get the best match
+        best_match = request.accept_languages.best_match(supported_languages)
+        return best_match
 
 
-@app.route('/')
-def index() -> str:
-    """
-    Index route that renders a localized HTML page.
+@app.route("/")
+def index_4() -> str:
+    """The index function displays the home page of the web application.
+
+    Returns:
+        str: contents of the home page.
     """
     return render_template("4-index.html")
 
-# uncomment this line and comment the @babel.localeselector
-# you get this error:
-# AttributeError: 'Babel' object has no attribute 'localeselector'
-# babel.init_app(app, locale_selector=get_locale)
-
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
